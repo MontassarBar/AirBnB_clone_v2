@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
+from multiprocessing.sharedctypes import Value
 import sys
+from unicodedata import name
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -114,14 +116,19 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
+        list = args.split()
         """ Create an object of any class"""
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif list[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_instance = HBNBCommand.classes[list[0]]()
+        for i in range(1, len(list)):
+            key = list[i].split('=')[0]
+            value = list[i].split('=')[1]
+            setattr(new_instance, key, value)
         storage.save()
         print(new_instance.id)
         storage.save()
