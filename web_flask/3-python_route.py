@@ -24,13 +24,13 @@ def c_text(text):
     return 'C %s' % text2
 
 
-@app.route('/python', strict_slashes=False)
+@app.route('/python/', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def python_text(text='is cool'):
     '''display “Python ”, followed by the value of the text variable
     and replace underscore "_" symbols with a space'''
     text3 = text.replace("_", " ")
-    return 'python %s' % text3
+    return 'Python %s' % text3
 
 
 if __name__ == '__main__':
